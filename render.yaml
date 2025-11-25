@@ -7,8 +7,10 @@ services:
       npm install
       npm run build
       cd ..
+      cd backend
       npm install
-    startCommand: node backend/server.js
+    startCommand: node server.js
+    rootDir: backend
     envVars:
       - key: PORT
         value: 5000
