@@ -16,16 +16,38 @@ export default function App() {
   const [selected, setSelected] = useState(null);
   const [introDone, setIntroDone] = useState(false);
 
-  // ⭐ Custom cursor
+  // ⭐ Custom cursor ONLY on desktop (no touch)
+  // ⭐ Custom cursor ONLY on desktop
   useEffect(() => {
+    const isTouch =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0;
+
+    if (isTouch) {
+      // ❗ MOBILE → remove all cursor elements if created earlier
+      const oldCursor = document.querySelector(".custom-cursor");
+      if (oldCursor) oldCursor.remove();
+      document.body.classList.remove("enable-custom-cursor");
+      return;
+    }
+
+    // DESKTOP → enable custom-cursor mode
+    document.body.classList.add("enable-custom-cursor");
+
     const cursor = document.createElement("div");
     cursor.className = "custom-cursor";
+    cursor.style.left = "-100px"; // hide off-screen initially
+    cursor.style.top = "-100px"; // prevents stuck corner bug
     document.body.appendChild(cursor);
 
-    window.addEventListener("mousemove", (e) => {
+    const move = (e) => {
       cursor.style.left = `${e.clientX}px`;
       cursor.style.top = `${e.clientY}px`;
-    });
+    };
+
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
   }, []);
 
   // ⭐ Load APOD data
@@ -63,14 +85,14 @@ export default function App() {
       </ScrollFade>
 
       <main className="flex-grow">
-        {/* TODAY'S APOD */}
+        {/* TODAY APOD */}
         {today && (
           <ScrollFade>
             <Dashboard apod={today} onOpen={setSelected} />
           </ScrollFade>
         )}
 
-        {/* DATE PICKER SECTION */}
+        {/* DATE PICKER */}
         <ScrollFade>
           <section className="controls my-8">
             <DatePicker
@@ -94,7 +116,7 @@ export default function App() {
         </footer>
       </main>
 
-      {/* MODAL VIEWER */}
+      {/* MODAL */}
       {selected && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-lg flex items-center justify-center z-50 p-4">
           <motion.div
@@ -112,7 +134,7 @@ export default function App() {
             <h2 className="text-2xl font-bold">{selected.title}</h2>
             <p className="opacity-80 mb-4">{selected.date}</p>
 
-            {/* MEDIA HANDLING */}
+            {/* IMAGE */}
             {selected.media_type === "image" && (
               <img
                 src={selected.url}
@@ -121,6 +143,7 @@ export default function App() {
               />
             )}
 
+            {/* VIDEO */}
             {selected.media_type === "video" && (
               <iframe
                 src={
@@ -134,6 +157,7 @@ export default function App() {
               />
             )}
 
+            {/* OTHER */}
             {selected.media_type === "other" && (
               <div className="rounded-xl bg-black/40 p-6 text-center text-cyan-300">
                 ⚠ No direct media available — see description below.

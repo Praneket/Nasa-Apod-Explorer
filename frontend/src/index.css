@@ -6,7 +6,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Force dark background so nothing shows white by default */
+/* Base screen */
 html,
 body,
 #root {
@@ -14,60 +14,65 @@ body,
   background-color: #000;
 }
 
-/* Custom cursor spark */
-body {
-  cursor: none;
-  @apply font-exo;
+/* -------------------------
+   CUSTOM CURSOR — DESKTOP ONLY
+-------------------------- */
+
+/* Desktop: hide default cursor + show custom cursor */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+
+  .custom-cursor {
+    display: block;
+  }
 }
 
-/* Hide scrollbar completely (Chrome, Edge, Safari) */
-::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
-/* Hide scrollbar for Firefox */
-* {
-  scrollbar-width: none;
+/* Mobile/tablet: show normal cursor (or none) & hide spark */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
+  }
+
+  * {
+    cursor: auto !important;
+  }
 }
 
+/* Custom cursor ball */
 .custom-cursor {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   position: fixed;
   background: radial-gradient(circle, #ffffff, #33ccff);
   box-shadow: 0 0 20px #33ccff;
   pointer-events: none;
   transform: translate(-50%, -50%);
-  transition: transform 0.05s ease-out;
+  transition: transform 0.06s ease-out;
   z-index: 999999;
 }
 
-/* small utility to keep modal's inner scroll hidden visually */
+/* Hide scrollbars */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+* {
+  scrollbar-width: none;
+}
+
 .modal-scroll-hide::-webkit-scrollbar {
   display: none;
 }
+
 .modal-scroll-hide {
   scrollbar-width: none;
 }
 
+/* Prevent iframe from breaking cursor logic */
 iframe {
   pointer-events: auto;
-  cursor: none !important;
-}
-
-/* Hide ALL default cursors everywhere */
-* {
-  cursor: none !important;
-}
-button,
-a,
-input,
-select,
-textarea,
-img,
-div,
-span,
-label {
-  cursor: none !important;
 }
