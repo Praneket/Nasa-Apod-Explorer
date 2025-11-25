@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: nasa-apod-explorer
+    name: apod-explorer
     env: node
     buildCommand: |
       cd frontend
