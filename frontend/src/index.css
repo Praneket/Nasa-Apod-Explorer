@@ -1,0 +1,73 @@
+@import "swiper/css";
+@import "swiper/css/effect-fade";
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Force dark background so nothing shows white by default */
+html,
+body,
+#root {
+  height: 100%;
+  background-color: #000;
+}
+
+/* Custom cursor spark */
+body {
+  cursor: none;
+  @apply font-exo;
+}
+
+/* Hide scrollbar completely (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
+
+.custom-cursor {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: fixed;
+  background: radial-gradient(circle, #ffffff, #33ccff);
+  box-shadow: 0 0 20px #33ccff;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s ease-out;
+  z-index: 999999;
+}
+
+/* small utility to keep modal's inner scroll hidden visually */
+.modal-scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+.modal-scroll-hide {
+  scrollbar-width: none;
+}
+
+iframe {
+  pointer-events: auto;
+  cursor: none !important;
+}
+
+/* Hide ALL default cursors everywhere */
+* {
+  cursor: none !important;
+}
+button,
+a,
+input,
+select,
+textarea,
+img,
+div,
+span,
+label {
+  cursor: none !important;
+}
