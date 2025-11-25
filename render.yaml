@@ -4,6 +4,7 @@ services:
     env: node
     rootDir: .
     buildCommand: |
+      npm install -g vite
       cd frontend
       npm install
       npm run build
