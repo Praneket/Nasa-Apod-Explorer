@@ -16,8 +16,6 @@ export default function App() {
   const [selected, setSelected] = useState(null);
   const [introDone, setIntroDone] = useState(false);
 
-  // ⭐ Custom cursor ONLY on desktop (no touch)
-  // ⭐ Custom cursor ONLY on desktop
   useEffect(() => {
     const isTouch =
       "ontouchstart" in window ||
@@ -25,20 +23,18 @@ export default function App() {
       navigator.msMaxTouchPoints > 0;
 
     if (isTouch) {
-      // ❗ MOBILE → remove all cursor elements if created earlier
       const oldCursor = document.querySelector(".custom-cursor");
       if (oldCursor) oldCursor.remove();
       document.body.classList.remove("enable-custom-cursor");
       return;
     }
 
-    // DESKTOP → enable custom-cursor mode
     document.body.classList.add("enable-custom-cursor");
 
     const cursor = document.createElement("div");
     cursor.className = "custom-cursor";
-    cursor.style.left = "-100px"; // hide off-screen initially
-    cursor.style.top = "-100px"; // prevents stuck corner bug
+    cursor.style.left = "-100px";
+    cursor.style.top = "-100px";
     document.body.appendChild(cursor);
 
     const move = (e) => {
@@ -50,7 +46,6 @@ export default function App() {
     return () => window.removeEventListener("mousemove", move);
   }, []);
 
-  // ⭐ Load APOD data
   useEffect(() => {
     getToday().then(setToday).catch(console.error);
 
@@ -65,7 +60,6 @@ export default function App() {
       .catch(console.error);
   }, []);
 
-  // ⭐ Intro animation first
   if (!introDone) return <IntroAnimation onFinish={() => setIntroDone(true)} />;
 
   return (

@@ -17,7 +17,6 @@ export default function DatePicker({ onPick }) {
 
   const [carouselData, setCarouselData] = useState([]);
 
-  // Format date
   const formatDate = () => {
     const yyyy = year;
     const mm = String(month).padStart(2, "0");
@@ -25,7 +24,6 @@ export default function DatePicker({ onPick }) {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  // Load preview for selected date
   const loadPreview = async () => {
     const d = formatDate();
     setLoadingPreview(true);
@@ -34,7 +32,6 @@ export default function DatePicker({ onPick }) {
       const res = await fetch(`/api/apod?date=${d}`);
       const data = await res.json();
 
-      // If date is invalid or APOD doesn't exist
       if (data.error || !data.url) {
         setPreview({
           media_type: "none",
@@ -45,7 +42,6 @@ export default function DatePicker({ onPick }) {
       }
 
       if (data.media_type === "image") {
-        // Preload image before showing
         const img = new Image();
         img.src = data.url;
         img.onload = () => {
@@ -69,7 +65,6 @@ export default function DatePicker({ onPick }) {
     loadPreview();
   }, [year, month, day]);
 
-  // Load recent carousel (last 8 days)
   useEffect(() => {
     const loadCarousel = async () => {
       const end = new Date();
@@ -92,7 +87,6 @@ export default function DatePicker({ onPick }) {
     loadCarousel();
   }, []);
 
-  // Load final APOD into the modal
   const handleSelect = async () => {
     setLoading(true);
     await onPick(formatDate());

@@ -9,16 +9,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// API ROUTES
 app.use("/api/apod", apodRoutes);
 
-// SERVE FRONTEND (absolute path required on Render)
 const frontendPath = path.join(__dirname, "../frontend/dist");
 console.log("Serving frontend from:", frontendPath);
 
 app.use(express.static(frontendPath));
 
-// SPA fallback
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });

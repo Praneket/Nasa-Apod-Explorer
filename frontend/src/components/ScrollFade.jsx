@@ -5,7 +5,7 @@ export default function ScrollFade({ children }) {
   const ref = useRef(null);
 
   const inView = useInView(ref, {
-    threshold: 0.2,       // 20% visibility
+    threshold: 0.2,
     margin: "0px 0px -20% 0px",
   });
 

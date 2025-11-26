@@ -13,7 +13,7 @@ export default function Gallery({ items = [], onOpen }) {
         {items.map((it) => {
           const ref = useRef(null);
           const inView = useInView(ref, {
-            threshold: 0.3,     // card becomes visible when 30% in view
+            threshold: 0.3,
             margin: "0px 0px -20% 0px",
           });
 
@@ -31,7 +31,7 @@ export default function Gallery({ items = [], onOpen }) {
               className="p-2 rounded-xl bg-black/40 border border-white/10 backdrop-blur-xl shadow-lg cursor-pointer"
               onClick={() => onOpen(it)}
             >
-              {/* ⭐ IMAGE */}
+              {/*IMAGE */}
               {it.media_type === "image" && (
                 <img
                   src={it.url}
@@ -40,7 +40,7 @@ export default function Gallery({ items = [], onOpen }) {
                 />
               )}
 
-              {/* ⭐ VIDEO */}
+              {/* VIDEO */}
               {it.media_type === "video" && (() => {
                 let videoId = null;
 
@@ -79,7 +79,7 @@ export default function Gallery({ items = [], onOpen }) {
                 );
               })()}
 
-              {/* ⭐ OTHER */}
+              {/* OTHER */}
               {it.media_type === "other" && (
                 <div className="relative w-full h-44 rounded-lg overflow-hidden shadow-xl bg-black/40 border border-cyan-500/40 backdrop-blur-md flex items-center justify-center">
                   <p className="text-cyan-300 text-center text-sm px-3">
@@ -89,7 +89,7 @@ export default function Gallery({ items = [], onOpen }) {
                 </div>
               )}
 
-              {/* ⭐ TITLE */}
+              {/* TITLE */}
               <p className="mt-2 text-sm text-white/90 font-medium text-center">
                 {it.title}
               </p>

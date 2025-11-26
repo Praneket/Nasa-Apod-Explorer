@@ -3,7 +3,6 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      // Use one reliable background key "stars"
       backgroundImage: {
         stars: "url('/src/assets/milkyway.jpg')",
       },
