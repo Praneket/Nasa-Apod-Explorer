@@ -87,7 +87,7 @@ cd Nasa-Apod-Explorer
 Create **backend/.env**:
 
 ```
-NASA_API_KEY=YOUR_KEY
+NASA_API_KEY=ENTER_YOUR_API_KEY
 PORT=5000
 CACHE_TTL_SECONDS=86400
 CACHE_MAX_ITEMS=200
@@ -98,7 +98,7 @@ Run backend:
 ```bash
 cd backend
 npm install
-npm start or npm run dev
+npm run dev
 ```
 
 ### 3️⃣ Frontend Setup
@@ -120,96 +120,3 @@ Website :
 
 ---
 
-## 🌐 Production Build & Render Deployment
-
-Use this **render.yaml** configuration:
-
-```yaml
-services:
-  - type: web
-    name: nasa-apod-explorer
-    env: node
-    rootDir: .
-    buildCommand: |
-      cd frontend && npm install && npm run build
-      cd ../backend && npm install
-    startCommand: node backend/server.js
-    envVars:
-      - key: NASA_API_KEY
-        sync: false
-```
-
-📌 Important:
-
-* Render runs backend as the server.
-* Frontend `dist/` is served by Express.
-* API calls use `/api/apod/...` (same origin).
-
----
-
-## 🎯 API Endpoints (Internal)
-
-| Endpoint                                      | Description              |
-| --------------------------------------------- | ------------------------ |
-| `/api/apod/today`                             | Today’s APOD             |
-| `/api/apod?date=YYYY-MM-DD`                   | APOD for a specific date |
-| `/api/apod/range?start_date=...&end_date=...` | APODs for range          |
-
-Each APOD object contains:
-
-```
-{
-  date,
-  title,
-  explanation,
-  media_type,
-  url,
-  hdurl?,
-  copyright?
-}
-```
-
----
-
-## 🧠 Functionality Mapping to Requirements
-
-### ✔ Web Service Requirements
-
-* **Cache responses** → LRU Cache implemented
-* **Cache expiry + max size** → Provided via TTL + MAX
-* **Secure API key** → Stored in .env
-* **REST practices** → Proper routes & status codes
-* **Local run support** → Node backend + Vite frontend
-
-### ✔ UI Requirements
-
-* Dashboard for today’s APOD
-* Date selector with sliders
-* Gallery view of recent posts
-* Detailed modal for each APOD
-* Swiper-based image/video preview
-* Smooth animations + responsive layout
-
-All required features from the question have been implemented.
-
----
-
-## 🚀 Future Enhancements
-
-* User favorites with localStorage
-* Infinite scroll gallery
-* Download wallpaper button
-* Theme switcher
-
----
-
-## 📜 License
-
-MIT License — NASA images may require attribution.
-
----
-
-## 👤 Author
-
-**Praneket**
-GitHub: [https://github.com/Praneket](https://github.com/Praneket)
